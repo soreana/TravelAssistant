@@ -1,0 +1,1 @@
+web:    java -jar target/TravelAssistant-with-dependencies.jar $PORT
