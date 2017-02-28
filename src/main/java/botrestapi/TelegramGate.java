@@ -14,7 +14,7 @@ import java.net.InetSocketAddress;
 public class TelegramGate {
 
     private static int portNumber ;
-    private static String url = Token.getToken();
+    private static String url = "/" + Token.getToken();
 
     public static void main (String [] args) {
         portNumber = Integer.parseInt(args[0]);
