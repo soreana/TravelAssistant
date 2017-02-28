@@ -4,19 +4,23 @@ package controller;
  * Created by sinakashipazha on 2/28/2017 AD.
  */
 
-public class ControllerController extends Controller{
+public class ControllerController {
 
-    @Override
-    public Controller controllerFactory(String controller, String message) {
+    public void controllerFactory(String controller, String message) {
+        Controller result = null;
         switch (controller){
             case "/start":
+                result = new StartController();
+                break;
             case "/travel":
-            case "/match":
+                result = new TravelController();
+                break;
             case "/compete":
+                result = new CompeteController();
+                break;
             default:
-                System.out.println("consider it done.");
-
+                result = new DefaultController();
         }
-        return null;
+        result.incomingMessage(message);
     }
 }
