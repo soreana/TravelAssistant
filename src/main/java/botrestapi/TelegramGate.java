@@ -3,6 +3,8 @@ package botrestapi;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+import controller.ControllerController;
+import org.json.JSONObject;
 
 import java.io.*;
 import java.net.InetSocketAddress;
@@ -30,6 +32,8 @@ public class TelegramGate {
     }
 
     static class MyHandler implements HttpHandler{
+        private ControllerController controllerController = new ControllerController();
+
         @Override
         public void handle(HttpExchange t) throws IOException {
 
@@ -41,13 +45,19 @@ public class TelegramGate {
                 input += temp2;
             }
 
-            System.out.println(input);
-
             t.sendResponseHeaders(200, response.length());
             System.out.println(response);
             OutputStream os = t.getResponseBody();
             os.write(response.getBytes());
             os.close();
+
+            JSONObject jsonObject = new JSONObject(input);
+            jsonObject = new JSONObject(jsonObject.getString("message"));
+            String command = jsonObject.getString("text");
+            System.out.println(command);
+
+            controllerController.controllerFactory(command,input);
+
         }
     }
 }
