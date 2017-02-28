@@ -14,6 +14,7 @@ public class ControllerController extends Controller{
             case "/match":
             case "/compete":
             default:
+                System.out.println("consider it done.");
 
         }
         return null;

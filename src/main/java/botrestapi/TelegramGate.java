@@ -51,13 +51,15 @@ public class TelegramGate {
             os.write(response.getBytes());
             os.close();
 
-            JSONObject jsonObject = new JSONObject(input);
-            jsonObject = new JSONObject(jsonObject.getString("message"));
-            String command = jsonObject.getString("text");
-            System.out.println(command);
-
-            controllerController.controllerFactory(command,input);
-
+            try {
+                JSONObject jsonObject = new JSONObject(input);
+                jsonObject = jsonObject.getJSONObject("message");
+                String command = jsonObject.getString("text");
+                System.out.println(command);
+                controllerController.controllerFactory(command,input);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
 }
