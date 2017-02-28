@@ -33,13 +33,15 @@ public class TelegramGate {
         @Override
         public void handle(HttpExchange t) throws IOException {
 
-            String response = "hello world";
+            String response = "hello world!";
             InputStream temp = t.getRequestBody();
             BufferedReader in= new BufferedReader(new InputStreamReader(temp));
             String input = "",temp2 = "";
             while ((temp2 = in.readLine() ) != null ){
                 input += temp2;
             }
+
+            System.out.println(input);
 
             t.sendResponseHeaders(200, response.length());
             System.out.println(response);
