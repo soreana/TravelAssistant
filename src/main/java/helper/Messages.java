@@ -6,7 +6,7 @@ package helper;
 public class Messages {
     private static final String welcomeMessage = "چه کاری از دستم براتون بر میاد؟" ;
     private static final String chooseDestinationMessage = "لطفا مقصد خود را انتخاب کنید." ;
-    private static final String menuMessage = "چی کار کنم؟" ;
+    private static final String menuMessage = "لطفا از بین کلید واژه‌های زیر یکی را انتخاب کنيد." ;
 
 
     public static String getWelcomeMessage(){
