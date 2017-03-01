@@ -4,7 +4,8 @@ import helper.Messages;
 import helper.TelegramMessages;
 import helper.TicketAPI;
 import other.Destination;
-import user.State;
+import user.UserManager;
+import user.UserState;
 
 import java.util.ArrayList;
 
@@ -15,13 +16,25 @@ public class TravelController extends Controller {
 
     @Override
     public void incomingMessage(String message) {
-        // todo read state of user
-        State state = State.CHOOOSE_ORIGIN;
+        UserState state = UserManager.getUserState(TelegramMessages.getUserId(message)) ;
         String chatId = TelegramMessages.getChatId(message);
 
         switch (state){
-            case CHOOOSE_ORIGIN:
-                TelegramMessages.sendMessageToUser(chatId , Messages.getOriginMessage());
+            case NOTHING:
+                break;
+            case CHOSEN_ORIGIN:
+                break;
+            case CHOSEN_DESTINATION:
+                break;
+            case CHOSEN_YEAR:
+                break;
+            case CHOSEN_MONTH:
+                break;
+            case CHOSEN_DAY:
+                break;
+            case CHOSEN_DURATION:
+                break;
+            case CHOSEN_TRAVEL_TYPE:
                 break;
         }
 
