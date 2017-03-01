@@ -129,7 +129,7 @@ public class TelegramMessages {
         JSONObject jsonObject = new JSONObject(message);
         jsonObject = jsonObject.getJSONObject("message");
         jsonObject = jsonObject.getJSONObject("chat");
-        return jsonObject.getString("id");
+        return String.valueOf(jsonObject.getInt("id"));
     }
 
     public static void main(String[] args) {
