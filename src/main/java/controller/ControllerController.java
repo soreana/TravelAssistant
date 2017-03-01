@@ -12,9 +12,11 @@ public class ControllerController {
             case "/start":
                 result = new StartController();
                 break;
+            case "سفر":
             case "/travel":
                 result = new TravelController();
                 break;
+            case "مسابقه":
             case "/compete":
                 result = new CompeteController();
                 break;
