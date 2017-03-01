@@ -8,6 +8,7 @@ import java.util.Map;
  */
 public class UserManager {
     private static UserManager myInstance = new UserManager();
+    private static Map<String,User> map = new HashMap<>();
 
     private UserManager(){
 
@@ -17,6 +18,16 @@ public class UserManager {
         return myInstance;
     }
 
-    private static Map<String,User> map = new HashMap<>();
+    private static void putUser(User user){
+        map.put(user.getUserTelegramID(),user);
+    }
 
+
+    public static User getUserById(String id){
+        return map.get(id);
+    }
+
+    public static UserState getUserState(String id){
+        return map.get(id).getState();
+    }
 }
