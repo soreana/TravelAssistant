@@ -1,5 +1,6 @@
 package controller;
 
+import helper.Messages;
 import helper.TelegramMessages;
 
 /**
@@ -12,7 +13,7 @@ public class DefaultController extends Controller {
     public void incomingMessage(String message) {
         // todo reset user state
         TelegramMessages.sendMessageToUser(TelegramMessages.getChatId(message),
-                "چه کاری از دستم براتون بر میاد؟");
-        // todo set keyboard
+                Messages.getWelcomeMessage());
+        TelegramMessages.travelOrCompeteKeyboardToChat(TelegramMessages.getChatId(message));
     }
 }
