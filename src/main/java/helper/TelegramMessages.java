@@ -132,6 +132,13 @@ public class TelegramMessages {
         return String.valueOf(jsonObject.getInt("id"));
     }
 
+    public static String getUserId(String message){
+        return new JSONObject(message)
+                .getJSONObject("message")
+                .getJSONObject("from")
+                .getString("id");
+    }
+
     public static void travelModeKeyboardToChat(String chatId){
         JSONObject jsonObject = getJsonKeyboardOfTravelMode(chatId);
         httpsPostRequestSendMessage(jsonObject);
