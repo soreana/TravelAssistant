@@ -132,6 +132,32 @@ public class TelegramMessages {
         return String.valueOf(jsonObject.getInt("id"));
     }
 
+    public static void travelModeKeyboardToChat(String chatId){
+        JSONObject jsonObject = getJsonKeyboardOfTravelMode(chatId);
+        httpsPostRequestSendMessage(jsonObject);
+
+    }
+
+    private static JSONObject getJsonKeyboardOfTravelMode(String chatId) {
+        JSONObject jsonObject = createRequestJsonObject(chatId,Messages.getTravelModeMessage());
+        JSONArray mainArray = new JSONArray();
+        JSONArray innerArray = new JSONArray();
+
+        innerArray.put(new JSONObject("{\"text\":\"هواپیما\"}"));
+        innerArray.put(new JSONObject("{\"text\":\"قطار\"}"));
+        innerArray.put(new JSONObject("{\"text\":\"اتوبوس\"}"));
+
+        mainArray.put(innerArray);
+
+        JSONObject replyMarkup = new JSONObject();
+        replyMarkup.put("keyboard", mainArray);
+        replyMarkup.put("resize_keyboard",true);
+
+        jsonObject.put("reply_markup",replyMarkup);
+
+        return jsonObject;
+    }
+
     public static void main(String[] args) {
         sendMessageToUser(String.valueOf(82662030), "سلام");
         ArrayList<Destination> destinations = new ArrayList<>();
