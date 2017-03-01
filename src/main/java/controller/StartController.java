@@ -13,6 +13,6 @@ public class StartController extends Controller {
         // todo save new user account
         TelegramMessages.sendMessageToUser(TelegramMessages.getChatId(message),
                 Messages.getWelcomeMessage());
-        // todo set key board for travel
+        TelegramMessages.travelOrCompeteKeyboardToChat(TelegramMessages.getChatId(message));
     }
 }
