@@ -9,6 +9,7 @@ import other.Destination;
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by sinakashipazha on 2/28/2017 AD.
@@ -75,11 +76,14 @@ public class TelegramMessages {
         return temp;
     }
 
+    private static JSONObject createButton(String text , String callbackData){
+        return new JSONObject()
+                .put("text",text)
+                .put("callback_data",callbackData);
+    }
+
     private static JSONObject createButton(String text) {
-        JSONObject temp = new JSONObject();
-        temp.put("text", text);
-        temp.put("callback_data", text);
-        return temp;
+        return createButton(text,text);
     }
 
     public static JSONObject createRequestJsonObject(String chatId, String message) {
@@ -165,17 +169,48 @@ public class TelegramMessages {
         return jsonObject;
     }
 
-    public static void main(String[] args) {
-        sendMessageToUser(String.valueOf(82662030), "سلام");
-        ArrayList<Destination> destinations = new ArrayList<>();
-        destinations.add(new Destination("قزوین بی بازگشت"));
-        destinations.add(new Destination("قزوین با بازگشت"));
-        destinations.add(new Destination("اصفهان"));
-        destinations.add(new Destination("مشهد"));
-        destinations.add(new Destination("تهران"));
-        destinations.add(new Destination("اهواز"));
-        destinationListKeyboardToChat(String.valueOf(82662030),destinations);
+    private static JSONArray createOriginKeyboard(){
+        Iterator<String> iterator = OriginMapper.getKeySet().iterator();
 
-        travelOrCompeteKeyboardToChat(String.valueOf(82662030));
+        JSONArray mainArray = new JSONArray();
+        while (iterator.hasNext()) {
+            JSONArray innerArray = new JSONArray();
+            for (int i = 0; i < 3 && iterator.hasNext(); i++) {
+                String originAbbreviate = iterator.next();
+                innerArray.put(createButton(
+                        OriginMapper.getNameForAbbreviate(originAbbreviate),
+                        "travel_" + originAbbreviate));
+            }
+
+            mainArray.put(innerArray);
+        }
+
+        return mainArray;
+    }
+
+    public static void sendOriginListToUser(String chatId){
+        JSONObject jsonObject = createRequestJsonObject(chatId,Messages.getOriginMessage());
+
+        JSONObject replyMarkup = new JSONObject();
+
+        replyMarkup.put("inline_keyboard",createOriginKeyboard());
+        jsonObject.put("reply_markup",replyMarkup);
+
+        httpsPostRequestSendMessage(jsonObject);
+    }
+
+    public static void main(String[] args) {
+        sendOriginListToUser(String.valueOf(85036220));
+//        sendMessageToUser(String.valueOf(82662030), "سلام");
+//        ArrayList<Destination> destinations = new ArrayList<>();
+//        destinations.add(new Destination("قزوین بی بازگشت"));
+//        destinations.add(new Destination("قزوین با بازگشت"));
+//        destinations.add(new Destination("اصفهان"));
+//        destinations.add(new Destination("مشهد"));
+//        destinations.add(new Destination("تهران"));
+//        destinations.add(new Destination("اهواز"));
+//        destinationListKeyboardToChat(String.valueOf(82662030),destinations);
+//
+//        travelOrCompeteKeyboardToChat(String.valueOf(82662030));
     }
 }
