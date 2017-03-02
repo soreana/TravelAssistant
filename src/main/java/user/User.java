@@ -17,7 +17,7 @@ public class User {
     private String userToken;
 
     public User(JSONObject jsonObject){
-        telegramID = jsonObject.getString("id");
+        telegramID = String.valueOf(jsonObject.getInt("id"));
         firstName = jsonObject.getString("first_name");
         lastName = jsonObject.getString("last_name");
         userName = jsonObject.getString("username");
