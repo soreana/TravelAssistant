@@ -11,12 +11,14 @@ public class TravelController extends Controller {
 
     @Override
     public void incomingMessage(String message) {
-        UserState state = UserManager.getUserState(TelegramMessages.getUserId(message)) ;
+        String userId = TelegramMessages.getUserId(message);
+        UserState state = UserManager.getUserState(userId) ;
         String chatId = TelegramMessages.getChatId(message);
 
         switch (state){
             case NOTHING:
-                // todo ask for origin
+                TelegramMessages.sendOriginListToUser(chatId);
+                UserManager.getUserById(userId).changeStateForward();
                 break;
             case CHOSEN_ORIGIN:
                 // todo ask for destination
