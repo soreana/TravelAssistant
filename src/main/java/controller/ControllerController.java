@@ -6,9 +6,14 @@ package controller;
 
 public class ControllerController {
 
-    public void controllerFactory(String controller, String message) {
-        Controller result = null;
-        switch (controller){
+    public void controllerFactory(String command, String message) {
+        if(command.contains("travel_")){
+            new TravelController().incomingMessage(message);
+            return;
+        }
+
+        Controller result ;
+        switch (command){
             case "/start":
                 result = new StartController();
                 break;
