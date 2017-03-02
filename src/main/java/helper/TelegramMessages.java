@@ -137,10 +137,10 @@ public class TelegramMessages {
     }
 
     public static String getUserId(String message){
-        return new JSONObject(message)
+        return String.valueOf(new JSONObject(message)
                 .getJSONObject("message")
                 .getJSONObject("from")
-                .getString("id");
+                .getInt("id"));
     }
 
     public static void travelModeKeyboardToChat(String chatId){
