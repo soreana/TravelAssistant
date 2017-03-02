@@ -16,4 +16,8 @@ public class User {
     public String getUserTelegramID() {
         return userTelegramID;
     }
+
+    public void changeStateForward() {
+        userState = userState.forward();
+    }
 }
