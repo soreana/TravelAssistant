@@ -46,7 +46,6 @@ public class TelegramGate {
             }
 
             t.sendResponseHeaders(200, response.length());
-            System.out.println(response);
             OutputStream os = t.getResponseBody();
             os.write(response.getBytes());
             os.close();
@@ -55,7 +54,6 @@ public class TelegramGate {
                 JSONObject jsonObject = new JSONObject(input);
                 jsonObject = jsonObject.getJSONObject("message");
                 String command = jsonObject.getString("text");
-                System.out.println(command);
                 controllerController.controllerFactory(command,input);
             }catch (Exception e){
                 e.printStackTrace();
