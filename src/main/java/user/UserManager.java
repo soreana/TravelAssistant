@@ -1,5 +1,7 @@
 package user;
 
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,8 +20,9 @@ public class UserManager {
         return myInstance;
     }
 
-    private static void putUser(User user){
-        map.put(user.getUserTelegramID(),user);
+    public static void putUser(JSONObject from){
+        User user = new User(from);
+        map.put(user.getTelegramID(),user);
     }
 
 
