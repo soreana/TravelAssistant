@@ -7,11 +7,11 @@ public class Messages {
     private static final String welcomeMessage = "چه کاری از دستم براتون بر میاد؟" ;
     private static final String chooseDestinationMessage = "لطفا مقصد خود را انتخاب کنید." ;
     private static final String menuMessage = "لطفا از بین کلید واژه‌های زیر یکی را انتخاب کنيد." ;
-    private static final String originMessage = "لطفا مبدا خود را وارد کنید.";
+    private static final String originMessage = "لطفا مبدا خود را انتخاب کنید.";
     private static final String durationMessage = "لطفا مدت سفر خود را انتخاب کنید.";
     private static final String travelModeMessage = "لطفا روش سفر خود را انتخاب کنید.";
     private static final String yearDateMessage= "لطفا تاریخ مورد نظر خود را انتخاب کنید.";
-    private static final String mounthDateMessage = "لطفا ماه سفر خود را انتخاب کنید.";
+    private static final String monthDateMessage = "لطفا ماه سفر خود را انتخاب کنید.";
     private static final String dayDateMessage = "لطفا روز سفر خود را انتخاب کنید.";
     private static final String resultListMessage = "نتایج جست و جو:";
     private static final String paymentMessage = "لینک پرداخت";
@@ -45,8 +45,8 @@ public class Messages {
         return yearDateMessage;
     }
 
-    public static String getMounthDateMessage() {
-        return mounthDateMessage;
+    public static String getMonthDateMessage() {
+        return monthDateMessage;
     }
 
     public static String getDayDateMessage() {
