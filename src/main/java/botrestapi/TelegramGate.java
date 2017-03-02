@@ -51,6 +51,7 @@ public class TelegramGate {
             os.close();
 
             try {
+                System.out.println(input);
                 JSONObject jsonObject = new JSONObject(input);
                 jsonObject = jsonObject.getJSONObject("message");
                 String command = jsonObject.getString("text");
