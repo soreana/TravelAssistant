@@ -9,15 +9,15 @@ public enum UserState {
     CHOSEN_ORIGIN,
     SENT_DESTINATION,
     CHOSEN_DESTINATION,
-    SEND_YEAR_OPTIONS,
+    SENT_YEAR_OPTIONS,
     CHOSEN_YEAR,
-    SEND_MONTH_OPTIONS,
+    SENT_MONTH_OPTIONS,
     CHOSEN_MONTH,
-    SEND_DAY_OPTIONS,
+    SENT_DAY_OPTIONS,
     CHOSEN_DAY,
-    SEND_DURATION_OPTIONS,
+    SENT_DURATION_OPTIONS,
     CHOSEN_DURATION,
-    SEND_TRAVEL_TYPE_OPTIONS,
+    SENT_TRAVEL_TYPE_OPTIONS,
     CHOSEN_TRAVEL_TYPE;
 
     public UserState forward() {
@@ -31,24 +31,24 @@ public enum UserState {
             case SENT_DESTINATION:
                 return CHOSEN_DESTINATION;
             case CHOSEN_DESTINATION:
-                return SEND_YEAR_OPTIONS;
-            case SEND_YEAR_OPTIONS:
+                return SENT_YEAR_OPTIONS;
+            case SENT_YEAR_OPTIONS:
                 return CHOSEN_YEAR;
             case CHOSEN_YEAR:
-                return SEND_MONTH_OPTIONS;
-            case SEND_MONTH_OPTIONS:
+                return SENT_MONTH_OPTIONS;
+            case SENT_MONTH_OPTIONS:
                 return CHOSEN_MONTH;
             case CHOSEN_MONTH:
-                return SEND_DAY_OPTIONS;
-            case SEND_DAY_OPTIONS:
+                return SENT_DAY_OPTIONS;
+            case SENT_DAY_OPTIONS:
                 return CHOSEN_DAY;
             case CHOSEN_DAY:
-                return SEND_DURATION_OPTIONS;
-            case SEND_DURATION_OPTIONS:
+                return SENT_DURATION_OPTIONS;
+            case SENT_DURATION_OPTIONS:
                 return CHOSEN_DURATION;
             case CHOSEN_DURATION:
-                return SEND_TRAVEL_TYPE_OPTIONS;
-            case SEND_TRAVEL_TYPE_OPTIONS:
+                return SENT_TRAVEL_TYPE_OPTIONS;
+            case SENT_TRAVEL_TYPE_OPTIONS:
                 return CHOSEN_TRAVEL_TYPE;
             case CHOSEN_TRAVEL_TYPE:
                 return NOTHING;
