@@ -43,12 +43,12 @@ public class TelegramGate {
             jsonObject = jsonObject.getJSONObject("callback_query");
 
             message.put("from", jsonObject.getJSONObject("from"));
-            message.put("text", jsonObject.getJSONObject("data"));
+            message.put("text", jsonObject.getString("data"));
 
             jsonObject = jsonObject.getJSONObject("message");
 
             message.put("chat", jsonObject.getJSONObject("chat"));
-            message.put("date", jsonObject.getString("date"));
+            message.put("date", jsonObject.getInt("date"));
             message.put("message_id", jsonObject.getInt("message_id"));
 
 
