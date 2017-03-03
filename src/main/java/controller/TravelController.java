@@ -13,18 +13,18 @@ public class TravelController extends Controller {
     @Override
     public void incomingMessage(String message) {
         String userId = TelegramMessages.getUserId(message);
-        UserState state = UserManager.getUserState(userId) ;
+        UserState state = UserManager.getUserState(userId);
         String chatId = TelegramMessages.getChatId(message);
 
         String origin = null;
 
-        switch (state){
+        switch (state) {
             case SENT_ORIGIN:
                 System.out.println("sent origin.");
                 origin = TelegramMessages.getTextPartOfMessage(message).substring(7);
                 UserManager.getUserById(userId)
-                        .instantiateNewTravel(origin)
-                        .changeStateForward();
+                        .instantiateNewTravel(origin);
+                UserManager.getUserById(userId).changeStateForward();
                 break;
             case SENT_DESTINATION:
                 break;
@@ -43,14 +43,14 @@ public class TravelController extends Controller {
         System.out.println(origin);
         System.out.println(state);
 
-        switch (state){
+        switch (state) {
             case NOTHING:
                 TelegramMessages.sendOriginsListToUser(chatId);
                 UserManager.getUserById(userId).changeStateForward();
                 break;
             case CHOSEN_ORIGIN:
                 System.out.println("chosen_origin");
-                TelegramMessages.sendDestinationsListToUser(chatId ,
+                TelegramMessages.sendDestinationsListToUser(chatId,
                         TicketAPI.getDestinationForThisOrigin(origin));
                 UserManager.getUserById(userId)
                         .changeStateForward();
