@@ -45,34 +45,49 @@ public class User {
         switch (userState) {
             case NOTHING:
                 userState =  SENT_ORIGIN;
+                break;
             case SENT_ORIGIN:
                 userState = CHOSEN_ORIGIN;
+                break;
             case CHOSEN_ORIGIN:
                 userState = SENT_DESTINATION;
+                break;
             case SENT_DESTINATION:
                 userState = CHOSEN_DESTINATION;
+                break;
             case CHOSEN_DESTINATION:
                 userState = SENT_YEAR_OPTIONS;
+                break;
             case SENT_YEAR_OPTIONS:
                 userState = CHOSEN_YEAR;
+                break;
             case CHOSEN_YEAR:
                 userState = SENT_MONTH_OPTIONS;
+                break;
             case SENT_MONTH_OPTIONS:
                 userState = CHOSEN_MONTH;
+                break;
             case CHOSEN_MONTH:
                 userState = SENT_DAY_OPTIONS;
+                break;
             case SENT_DAY_OPTIONS:
                 userState = CHOSEN_DAY;
+                break;
             case CHOSEN_DAY:
                 userState = SENT_DURATION_OPTIONS;
+                break;
             case SENT_DURATION_OPTIONS:
                 userState = CHOSEN_DURATION;
+                break;
             case CHOSEN_DURATION:
                 userState = SENT_TRAVEL_TYPE_OPTIONS;
+                break;
             case SENT_TRAVEL_TYPE_OPTIONS:
                 userState = CHOSEN_TRAVEL_TYPE;
+                break;
             case CHOSEN_TRAVEL_TYPE:
                 userState = NOTHING;
+                break;
             default:
                 userState = NOTHING;
         }
