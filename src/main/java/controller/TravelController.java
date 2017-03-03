@@ -40,6 +40,9 @@ public class TravelController extends Controller {
                 break;
         }
 
+        System.out.println(origin);
+        System.out.println(state);
+
         switch (state){
             case NOTHING:
                 TelegramMessages.sendOriginsListToUser(chatId);
