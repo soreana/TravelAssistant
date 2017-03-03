@@ -2,6 +2,7 @@ package controller;
 
 import helper.TelegramMessages;
 import helper.TicketAPI;
+import user.User;
 import user.UserManager;
 import user.UserState;
 
@@ -23,8 +24,8 @@ public class TravelController extends Controller {
                 System.out.println("sent origin.");
                 origin = TelegramMessages.getTextPartOfMessage(message).substring(7);
                 UserManager.getUserById(userId)
-                        .instantiateNewTravel(origin);
-                UserManager.getUserById(userId).changeStateForward();
+                        .instantiateNewTravel(origin)
+                        .changeStateForward();
                 break;
             case SENT_DESTINATION:
                 break;
@@ -40,8 +41,7 @@ public class TravelController extends Controller {
                 break;
         }
 
-        System.out.println(origin);
-        System.out.println(state);
+        state = UserManager.getUserState(userId);
 
         switch (state) {
             case NOTHING:
