@@ -1,6 +1,7 @@
 package controller;
 
 import helper.TelegramMessages;
+import helper.TicketAPI;
 import user.UserManager;
 import user.UserState;
 
@@ -15,13 +16,39 @@ public class TravelController extends Controller {
         UserState state = UserManager.getUserState(userId) ;
         String chatId = TelegramMessages.getChatId(message);
 
+        String origin = null;
+
+        switch (state){
+            case SENT_ORIGIN:
+                origin = TelegramMessages.getTextPartOfMessage(message).substring(7);
+                UserManager.getUserById(userId)
+                        .instantiateNewTravel(origin)
+                        .changeStateForward();
+                break;
+            case SENT_DESTINATION:
+                break;
+            case SENT_YEAR_OPTIONS:
+                break;
+            case SENT_MONTH_OPTIONS:
+                break;
+            case SENT_DAY_OPTIONS:
+                break;
+            case SENT_DURATION_OPTIONS:
+                break;
+            case SENT_TRAVEL_TYPE_OPTIONS:
+                break;
+        }
+
         switch (state){
             case NOTHING:
-                TelegramMessages.sendOriginListToUser(chatId);
+                TelegramMessages.sendOriginsListToUser(chatId);
                 UserManager.getUserById(userId).changeStateForward();
                 break;
             case CHOSEN_ORIGIN:
-                // todo ask for destination
+                TelegramMessages.sendDestinationsListToUser(chatId ,
+                        TicketAPI.getDestinationForThisOrigin(origin));
+                UserManager.getUserById(userId)
+                        .changeStateForward();
                 break;
             case CHOSEN_DESTINATION:
                 // todo ask for year

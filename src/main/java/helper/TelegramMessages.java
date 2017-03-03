@@ -1,6 +1,7 @@
 package helper;
 
 import botrestapi.Token;
+import jdk.nashorn.internal.runtime.regexp.JoniRegExp;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -43,7 +44,7 @@ public class TelegramMessages {
         return jsonObject;
     }
 
-    public static void destinationListKeyboardToChat(String chatId, ArrayList<Destination> destinations) {
+    public static void sendDestinationsListToUser(String chatId, ArrayList<Destination> destinations) {
         JSONObject jsonObject = getJsonKeyboardOfDestination(chatId,destinations);
         httpsPostRequestSendMessage(jsonObject);
     }
@@ -188,7 +189,7 @@ public class TelegramMessages {
         return mainArray;
     }
 
-    public static void sendOriginListToUser(String chatId){
+    public static void sendOriginsListToUser(String chatId){
         JSONObject jsonObject = createRequestJsonObject(chatId,Messages.getOriginMessage());
 
         JSONObject replyMarkup = new JSONObject();
@@ -199,8 +200,14 @@ public class TelegramMessages {
         httpsPostRequestSendMessage(jsonObject);
     }
 
+    public static String getTextPartOfMessage(String message){
+        return new JSONObject(message)
+                .getJSONObject("message")
+                .getString("text");
+    }
+
     public static void main(String[] args) {
-        sendOriginListToUser(String.valueOf(85036220));
+        sendOriginsListToUser(String.valueOf(85036220));
 //        sendMessageToUser(String.valueOf(82662030), "سلام");
 //        ArrayList<Destination> destinations = new ArrayList<>();
 //        destinations.add(new Destination("قزوین بی بازگشت"));
@@ -213,4 +220,5 @@ public class TelegramMessages {
 //
 //        travelOrCompeteKeyboardToChat(String.valueOf(82662030));
     }
+
 }

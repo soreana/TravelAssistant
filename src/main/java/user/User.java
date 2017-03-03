@@ -1,6 +1,7 @@
 package user;
 
 import org.json.JSONObject;
+import other.Travel;
 
 /**
  * Created by sinakashipazha on 2/27/2017 AD.
@@ -15,6 +16,8 @@ public class User {
     private UserState userState;
 
     private String userToken;
+
+    private Travel travel;
 
     public User(JSONObject jsonObject){
         telegramID = String.valueOf(jsonObject.getInt("id"));
@@ -36,7 +39,13 @@ public class User {
         return telegramID;
     }
 
-    public void changeStateForward() {
+    public User changeStateForward() {
         userState = userState.forward();
+        return this;
+    }
+
+    public User instantiateNewTravel(String origin) {
+        travel = new Travel(origin);
+        return this;
     }
 }
