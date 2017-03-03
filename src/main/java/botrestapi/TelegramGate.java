@@ -54,6 +54,8 @@ public class TelegramGate {
 
             result.put("message", message);
 
+            System.out.println(result);
+
             return result;
         }
 
@@ -82,9 +84,9 @@ public class TelegramGate {
                     jsonObject = createRegularMessageFromCallbackQuery(jsonObject);
                 }
 
-                jsonObject = jsonObject.getJSONObject("message");
-                command = jsonObject.getString("text");
-                controllerController.controllerFactory(command, input);
+                command = jsonObject.getJSONObject("message")
+                        .getString("text");
+                controllerController.controllerFactory(command, jsonObject.toString());
             } catch (Exception e) {
                 e.printStackTrace();
             }
