@@ -50,4 +50,8 @@ public class User {
         travel = new Travel(origin);
         return this;
     }
+
+    public void resetState() {
+        userState = NOTHING;
+    }
 }
