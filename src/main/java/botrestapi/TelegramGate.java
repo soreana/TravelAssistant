@@ -4,6 +4,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import controller.ControllerController;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
@@ -15,10 +16,10 @@ import java.net.InetSocketAddress;
 
 public class TelegramGate {
 
-    private static int portNumber ;
+    private static int portNumber;
     private static String url = "/" + Token.getToken();
 
-    public static void main (String [] args) {
+    public static void main(String[] args) {
         portNumber = Integer.parseInt(args[0]);
 
         try {
@@ -31,17 +32,39 @@ public class TelegramGate {
         }
     }
 
-    static class MyHandler implements HttpHandler{
+    static class MyHandler implements HttpHandler {
         private ControllerController controllerController = new ControllerController();
+
+        private JSONObject createRegularMessageFromCallbackQuery(JSONObject jsonObject) {
+            JSONObject result = new JSONObject();
+            result.put("update_id", jsonObject.getInt("update_id"));
+
+            JSONObject message = new JSONObject();
+            jsonObject = jsonObject.getJSONObject("callback_query");
+
+            message.put("from", jsonObject.getJSONObject("from"));
+            message.put("text", jsonObject.getJSONObject("data"));
+
+            jsonObject = jsonObject.getJSONObject("message");
+
+            message.put("chat", jsonObject.getJSONObject("chat"));
+            message.put("date", jsonObject.getString("date"));
+            message.put("message_id", jsonObject.getInt("message_id"));
+
+
+            result.put("message", message);
+
+            return result;
+        }
 
         @Override
         public void handle(HttpExchange t) throws IOException {
 
             String response = "hello world!";
             InputStream temp = t.getRequestBody();
-            BufferedReader in= new BufferedReader(new InputStreamReader(temp));
-            String input = "",temp2 = "";
-            while ((temp2 = in.readLine() ) != null ){
+            BufferedReader in = new BufferedReader(new InputStreamReader(temp));
+            String input = "", temp2 = "";
+            while ((temp2 = in.readLine()) != null) {
                 input += temp2;
             }
 
@@ -53,10 +76,16 @@ public class TelegramGate {
             try {
                 System.out.println(input);
                 JSONObject jsonObject = new JSONObject(input);
+                String command = "";
+
+                if (jsonObject.has("callback_query")) {
+                    jsonObject = createRegularMessageFromCallbackQuery(jsonObject);
+                }
+
                 jsonObject = jsonObject.getJSONObject("message");
-                String command = jsonObject.getString("text");
-                controllerController.controllerFactory(command,input);
-            }catch (Exception e){
+                command = jsonObject.getString("text");
+                controllerController.controllerFactory(command, input);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
