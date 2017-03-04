@@ -87,5 +87,8 @@ public class TravelController extends Controller {
 
         if (state != UserState.SENT_ORIGIN)
             currentUser.changeStateForward();
+
+        if (currentUser.getTravel() != null)
+            TelegramMessages.sendMessageToUser(chatId, currentUser.getTravel().toString());
     }
 }

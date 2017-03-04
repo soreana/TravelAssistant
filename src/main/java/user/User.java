@@ -88,4 +88,8 @@ public class User {
         this.travel.setTravelType( travelType);
         return this;
     }
+
+    public Travel getTravel() {
+        return travel;
+    }
 }
