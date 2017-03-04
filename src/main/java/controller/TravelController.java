@@ -17,7 +17,7 @@ public class TravelController extends Controller {
         UserState state = UserManager.getUserState(userId);
         String chatId = TelegramMessages.getChatId(message);
 
-        String origin = null , destination = null , year = null;
+        String origin = null , destination = null , year = null, month = null;
 
         switch (state) {
             case SENT_ORIGIN:
@@ -39,6 +39,10 @@ public class TravelController extends Controller {
                         .setTravelYear(year);
                 break;
             case SENT_MONTH_OPTIONS:
+                month = TelegramMessages.getTextPartOfMessage(message).substring(7);
+                UserManager.getUserById(userId)
+                        .setTravelMonth(month)
+                        .changeStateForward();
                 break;
             case SENT_DAY_OPTIONS:
                 break;
@@ -66,11 +70,12 @@ public class TravelController extends Controller {
                 UserManager.getUserById(userId).changeStateForward();
                 break;
             case CHOSEN_YEAR:
-                TelegramMessages.sendMonthOptions(chatId);
+                TelegramMessages.sendMonthOptions(chatId,year);
                 UserManager.getUserById(userId).changeStateForward();
                 break;
             case CHOSEN_MONTH:
-                // todo ask for day
+                TelegramMessages.sendDayOptions(chatId,month,UserManager.getUserById(userId).getTravelYear());
+                UserManager.getUserById(userId).changeStateForward();
                 break;
             case CHOSEN_DAY:
                 // todo ask for duration

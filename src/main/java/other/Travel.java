@@ -7,6 +7,7 @@ public class Travel {
     String origin ;
     String destination;
     private String year;
+    private String month;
 
     public Travel(String origin) {
         this.origin = origin;
@@ -18,5 +19,13 @@ public class Travel {
 
     public void setTravelYear(String travelYear) {
         this.year = travelYear;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
+    }
+
+    public String getYear() {
+        return year;
     }
 }

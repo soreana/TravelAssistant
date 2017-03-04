@@ -64,4 +64,13 @@ public class User {
         travel.setTravelYear(travelYear);
         return this;
     }
+
+    public User setTravelMonth(String travelMonth) {
+        this.travel.setMonth(travelMonth);
+        return this;
+    }
+
+    public String getTravelYear() {
+        return travel.getYear();
+    }
 }
