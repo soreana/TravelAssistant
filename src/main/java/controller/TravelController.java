@@ -23,42 +23,35 @@ public class TravelController extends Controller {
         switch (state) {
             case SENT_ORIGIN:
                 origin = TelegramMessages.getTextPartOfMessage(message).substring(7);
-                currentUser.instantiateNewTravel(origin)
-                        .changeStateForward();
+                currentUser.instantiateNewTravel(origin);
                 break;
             case SENT_DESTINATION:
                 destination = TelegramMessages.getTextPartOfMessage(message).substring(7);
-                currentUser.setTravelDestination(destination)
-                        .changeStateForward();
+                currentUser.setTravelDestination(destination);
                 break;
             case SENT_YEAR_OPTIONS:
                 year = TelegramMessages.getTextPartOfMessage(message).substring(7);
-                currentUser.setTravelYear(year)
-                        .changeStateForward();
+                currentUser.setTravelYear(year);
                 break;
             case SENT_MONTH_OPTIONS:
                 month = TelegramMessages.getTextPartOfMessage(message).substring(7);
-                currentUser.setTravelMonth(month)
-                        .changeStateForward();
+                currentUser.setTravelMonth(month);
                 break;
             case SENT_DAY_OPTIONS:
                 day = TelegramMessages.getTextPartOfMessage(message).substring(7);
-                currentUser.setTravelDay(day)
-                        .changeStateForward();
+                currentUser.setTravelDay(day);
                 break;
             case SENT_DURATION_OPTIONS:
                 duration = TelegramMessages.getTextPartOfMessage(message).substring(7);
-                currentUser.setDurationDay(duration)
-                        .changeStateForward();
+                currentUser.setDurationDay(duration);
                 break;
             case SENT_TRAVEL_TYPE_OPTIONS:
                 travelType = TelegramMessages.getTextPartOfMessage(message).substring(7);
-                currentUser.setTravelType(travelType)
-                        .changeStateForward();
+                currentUser.setTravelType(travelType);
                 break;
         }
 
-        state = currentUser.getState();
+        state = currentUser.changeStateForward().getState();
 
         switch (state) {
             case NOTHING:
