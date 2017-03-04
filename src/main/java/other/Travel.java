@@ -8,6 +8,7 @@ public class Travel {
     String destination;
     private String year;
     private String month;
+    private String day;
 
     public Travel(String origin) {
         this.origin = origin;
@@ -27,5 +28,9 @@ public class Travel {
 
     public String getYear() {
         return year;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
     }
 }

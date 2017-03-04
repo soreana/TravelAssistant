@@ -70,7 +70,13 @@ public class User {
         return this;
     }
 
+    public User setTravelDay(String day) {
+        this.travel.setDay(day);
+        return this;
+    }
+
     public String getTravelYear() {
         return travel.getYear();
     }
+
 }

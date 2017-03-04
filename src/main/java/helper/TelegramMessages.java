@@ -327,11 +327,37 @@ public class TelegramMessages {
         httpsPostRequestSendMessage(jsonObject);
     }
 
+    private static JSONArray createDurationKeyboard() {
+        JSONArray mainArray = new JSONArray();
+        JSONArray innerArray;
+
+        for(int i=1 ; i<10 ;){
+            innerArray = new JSONArray();
+            for (int j=0 ; j<3 ; j++){
+                innerArray.put(createButton(String.valueOf(i),"travel_"+i));
+                i++;
+            }
+            mainArray.put(innerArray);
+        }
+
+        return mainArray;
+    }
+
+    public static void sendDurationOptions(String chatId) {
+        JSONObject jsonObject = createRequestJsonObject(chatId, Messages.getDurationMessage());
+
+        JSONObject replyMarkup = new JSONObject();
+        replyMarkup.put("inline_keyboard", createDurationKeyboard());
+
+        jsonObject.put("reply_markup", replyMarkup);
+        httpsPostRequestSendMessage(jsonObject);
+    }
 
     public static void main(String[] args) {
 //        sendOriginsListToUser(String.valueOf(85036220));
 //        sendYearOptionsToUser(String.valueOf(85036220));
-        sendDayOptions(String.valueOf(85036220),"khordad","1396");
+//        sendDayOptions(String.valueOf(85036220),"khordad","1396");
+        sendDurationOptions(String.valueOf(82662030));
 //        sendMessageToUser(String.valueOf(82662030), "سلام");
 //        ArrayList<Destination> destinations = new ArrayList<>();
 //        destinations.add(new Destination("قزوین بی بازگشت"));
