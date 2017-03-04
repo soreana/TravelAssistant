@@ -9,6 +9,8 @@ public class Travel {
     private String year;
     private String month;
     private String day;
+    private String duration;
+    private String travelType;
 
     public Travel(String origin) {
         this.origin = origin;
@@ -32,5 +34,13 @@ public class Travel {
 
     public void setDay(String day) {
         this.day = day;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
+    public void setTravelType(String travelType) {
+        this.travelType = travelType;
     }
 }

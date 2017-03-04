@@ -153,7 +153,6 @@ public class TelegramMessages {
     public static void travelModeKeyboardToChat(String chatId) {
         JSONObject jsonObject = getJsonKeyboardOfTravelMode(chatId);
         httpsPostRequestSendMessage(jsonObject);
-
     }
 
     private static JSONObject getJsonKeyboardOfTravelMode(String chatId) {
@@ -354,11 +353,35 @@ public class TelegramMessages {
         httpsPostRequestSendMessage(jsonObject);
     }
 
+    private static JSONArray createTravelOptionsButton(String text , String callbackData ){
+        JSONArray innerArray = new JSONArray();
+        innerArray.put(createButton(text,callbackData));
+        return innerArray;
+    }
+
+    private static JSONArray createTravelKeyboard() {
+        return new JSONArray()
+                .put(createTravelOptionsButton("اتوبوس", "travel_bus"))
+                .put(createTravelOptionsButton("هواپیما", "travel_airplane"))
+                .put(createTravelOptionsButton("قطار", "travel_train"));
+    }
+
+    public static void sendTravelOptions(String chatId) {
+        JSONObject jsonObject = createRequestJsonObject(chatId, Messages.getTravelModeMessage());
+
+        JSONObject replyMarkup = new JSONObject();
+        replyMarkup.put("inline_keyboard", createTravelKeyboard());
+
+        jsonObject.put("reply_markup", replyMarkup);
+        httpsPostRequestSendMessage(jsonObject);
+    }
+
     public static void main(String[] args) {
+        sendTravelOptions(String.valueOf(85036220));
 //        sendOriginsListToUser(String.valueOf(85036220));
 //        sendYearOptionsToUser(String.valueOf(85036220));
 //        sendDayOptions(String.valueOf(85036220),"khordad","1396");
-        sendDurationOptions(String.valueOf(82662030));
+//        sendDurationOptions(String.valueOf(82662030));
 //        sendMessageToUser(String.valueOf(82662030), "سلام");
 //        ArrayList<Destination> destinations = new ArrayList<>();
 //        destinations.add(new Destination("قزوین بی بازگشت"));

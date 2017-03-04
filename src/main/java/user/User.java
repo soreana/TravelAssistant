@@ -79,4 +79,13 @@ public class User {
         return travel.getYear();
     }
 
+    public User setDurationDay(String durationDay) {
+        this.travel.setDuration(durationDay);
+        return this;
+    }
+
+    public User setTravelType(String travelType) {
+        this.travel.setTravelType( travelType);
+        return this;
+    }
 }
