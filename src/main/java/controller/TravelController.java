@@ -20,7 +20,7 @@ public class TravelController extends Controller {
 
         String origin = null, destination = null, year = null, month = null, day = null, duration = null, travelType = null;
 
-        System.out.println(state + " " + currentUser );
+        System.out.println(state + " " + currentUser);
 
         switch (state) {
             case NOTHING:
@@ -62,13 +62,8 @@ public class TravelController extends Controller {
 
         switch (state) {
             case CHOSEN_ORIGIN:
-                try {
-                    TelegramMessages.sendDestinationsListToUser(chatId,
-                            TicketAPI.getDestinationForThisOrigin(origin));
-                    System.out.println("here.");
-                } catch (Exception e){
-                    e.printStackTrace();
-                }
+                TelegramMessages.sendDestinationsListToUser(chatId,
+                        TicketAPI.getDestinationForThisOrigin(origin));
                 break;
             case CHOSEN_DESTINATION:
                 TelegramMessages.sendYearOptionsToUser(chatId);
@@ -90,6 +85,7 @@ public class TravelController extends Controller {
                 break;
         }
 
-        currentUser.changeStateForward();
+        if (state != UserState.SENT_ORIGIN)
+            currentUser.changeStateForward();
     }
 }
