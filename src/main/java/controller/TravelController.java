@@ -20,6 +20,8 @@ public class TravelController extends Controller {
 
         String origin = null, destination = null, year = null, month = null, day = null, duration = null, travelType = null;
 
+        System.out.println(state + " " + currentUser + " " + message);
+
         switch (state) {
             case NOTHING:
                 TelegramMessages.sendOriginsListToUser(chatId);
