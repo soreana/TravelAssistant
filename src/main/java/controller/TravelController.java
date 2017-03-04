@@ -60,32 +60,27 @@ public class TravelController extends Controller {
             case CHOSEN_ORIGIN:
                 TelegramMessages.sendDestinationsListToUser(chatId,
                         TicketAPI.getDestinationForThisOrigin(origin));
-                UserManager.getUserById(userId)
-                        .changeStateForward();
                 break;
             case CHOSEN_DESTINATION:
                 TelegramMessages.sendYearOptionsToUser(chatId);
-                UserManager.getUserById(userId).changeStateForward();
                 break;
             case CHOSEN_YEAR:
                 TelegramMessages.sendMonthOptions(chatId, year);
-                UserManager.getUserById(userId).changeStateForward();
                 break;
             case CHOSEN_MONTH:
-                TelegramMessages.sendDayOptions(chatId, month, UserManager.getUserById(userId).getTravelYear());
-                UserManager.getUserById(userId).changeStateForward();
+                TelegramMessages.sendDayOptions(chatId, month, currentUser.getTravelYear());
                 break;
             case CHOSEN_DAY:
                 TelegramMessages.sendDurationOptions(chatId);
-                UserManager.getUserById(userId).changeStateForward();
                 break;
             case CHOSEN_DURATION:
                 TelegramMessages.sendTravelOptions(chatId);
-                UserManager.getUserById(userId).changeStateForward();
                 break;
             case CHOSEN_TRAVEL_TYPE:
                 // todo get travel from Reza api
                 break;
         }
+
+        currentUser.changeStateForward();
     }
 }
