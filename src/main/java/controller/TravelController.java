@@ -51,7 +51,9 @@ public class TravelController extends Controller {
                 break;
         }
 
+        System.out.println(state);
         state = currentUser.changeStateForward().getState();
+        System.out.println(state);
 
         switch (state) {
             case NOTHING:
