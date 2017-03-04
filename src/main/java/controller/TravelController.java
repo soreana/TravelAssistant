@@ -27,8 +27,12 @@ public class TravelController extends Controller {
                 TelegramMessages.sendOriginsListToUser(chatId);
                 break;
             case SENT_ORIGIN:
-                origin = TelegramMessages.getTextPartOfMessage(message).substring(7);
-                currentUser.instantiateNewTravel(origin);
+                try {
+                    origin = TelegramMessages.getTextPartOfMessage(message).substring(7);
+                    currentUser.instantiateNewTravel(origin);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 break;
             case SENT_DESTINATION:
                 destination = TelegramMessages.getTextPartOfMessage(message).substring(7);
