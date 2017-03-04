@@ -6,6 +6,7 @@ package other;
 public class Travel {
     String origin ;
     String destination;
+    private String year;
 
     public Travel(String origin) {
         this.origin = origin;
@@ -13,5 +14,9 @@ public class Travel {
 
     public void setDestination(String destination) {
         this.destination = destination;
+    }
+
+    public void setTravelYear(String travelYear) {
+        this.year = travelYear;
     }
 }

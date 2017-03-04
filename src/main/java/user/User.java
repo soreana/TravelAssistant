@@ -59,4 +59,9 @@ public class User {
         travel.setDestination(travelDestination);
         return this;
     }
+
+    public User setTravelYear(String travelYear) {
+        travel.setTravelYear(travelYear);
+        return this;
+    }
 }

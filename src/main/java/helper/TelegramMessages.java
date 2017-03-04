@@ -232,6 +232,55 @@ public class TelegramMessages {
         httpsPostRequestSendMessage(jsonObject);
     }
 
+    private static JSONArray createMonthKeyboard(){
+
+        // todo clean up this code
+        JSONArray mainArray = new JSONArray();
+
+        JSONArray innerArray = new JSONArray();
+
+        innerArray.put(createButton("اسفند", "travel_esfand"));
+        innerArray.put(createButton("بهمن","travel_bahman"));
+        innerArray.put(createButton("دی","travel_dey"));
+
+        mainArray.put(innerArray);
+
+        innerArray = new JSONArray();
+
+        innerArray.put(createButton("آذر","travel_azar"));
+        innerArray.put(createButton("آبان","travel_aban"));
+        innerArray.put(createButton("مهر","travel_mehr"));
+
+        mainArray.put(innerArray);
+
+        innerArray = new JSONArray();
+
+        innerArray.put(createButton("شهریور","travel_shahrivar"));
+        innerArray.put(createButton("مرداد","travel_mordad"));
+        innerArray.put(createButton("تیر","travel_tir"));
+
+
+        mainArray.put(innerArray);
+
+        innerArray = new JSONArray();
+
+        innerArray.put(createButton("خرداد","travel_khordad"));
+        innerArray.put(createButton("اردیبهشت","travel_ordibehesht"));
+        innerArray.put(createButton("فروردین","travel_farvardin"));
+
+        return mainArray;
+    }
+
+    public static void sendMonthOptions(String chatId) {
+        JSONObject jsonObject = createRequestJsonObject(chatId,Messages.getYearDateMessage());
+
+        JSONObject replyMarkup = new JSONObject();
+        replyMarkup.put("inline_keyboard",createMonthKeyboard());
+
+        jsonObject.put("reply_markup",replyMarkup);
+        httpsPostRequestSendMessage(jsonObject);
+    }
+
     public static void main(String[] args) {
 //        sendOriginsListToUser(String.valueOf(85036220));
         sendYearOptionsToUser(String.valueOf(85036220));
