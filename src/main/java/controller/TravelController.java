@@ -20,19 +20,16 @@ public class TravelController extends Controller {
 
         String origin = null, destination = null, year = null, month = null, day = null, duration = null, travelType = null;
 
-        System.out.println(state + " " + currentUser + " " + message);
+        System.out.println(state + " " + currentUser );
 
         switch (state) {
             case NOTHING:
                 TelegramMessages.sendOriginsListToUser(chatId);
                 break;
             case SENT_ORIGIN:
-                try {
-                    origin = TelegramMessages.getTextPartOfMessage(message).substring(7);
-                    currentUser.instantiateNewTravel(origin);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+                origin = TelegramMessages.getTextPartOfMessage(message).substring(7);
+                currentUser.instantiateNewTravel(origin);
+                System.out.println(origin);
                 break;
             case SENT_DESTINATION:
                 destination = TelegramMessages.getTextPartOfMessage(message).substring(7);
@@ -61,11 +58,17 @@ public class TravelController extends Controller {
         }
 
         state = currentUser.changeStateForward().getState();
+        System.out.println(state);
 
         switch (state) {
             case CHOSEN_ORIGIN:
-                TelegramMessages.sendDestinationsListToUser(chatId,
-                        TicketAPI.getDestinationForThisOrigin(origin));
+                try {
+                    TelegramMessages.sendDestinationsListToUser(chatId,
+                            TicketAPI.getDestinationForThisOrigin(origin));
+                    System.out.println("here.");
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
                 break;
             case CHOSEN_DESTINATION:
                 TelegramMessages.sendYearOptionsToUser(chatId);
