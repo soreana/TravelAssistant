@@ -281,7 +281,7 @@ public class TelegramMessages {
     }
 
     public static void sendMonthOptions(String chatId, String year) {
-        JSONObject jsonObject = createRequestJsonObject(chatId, Messages.getYearDateMessage());
+        JSONObject jsonObject = createRequestJsonObject(chatId, Messages.getMonthDateMessage());
 
         JSONObject replyMarkup = new JSONObject();
         replyMarkup.put("inline_keyboard", createMonthKeyboard(year));
