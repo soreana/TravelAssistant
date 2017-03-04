@@ -14,7 +14,8 @@ public class TravelController extends Controller {
     @Override
     public void incomingMessage(String message) {
         String userId = TelegramMessages.getUserId(message);
-        UserState state = UserManager.getUserState(userId);
+        User currentUser = UserManager.getUserById(userId);
+        UserState state = currentUser.getState();
         String chatId = TelegramMessages.getChatId(message);
 
         String origin = null , destination = null , year = null, month = null, day =null,duration =null,travelType=null;
