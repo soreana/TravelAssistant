@@ -1,7 +1,6 @@
 package helper;
 
 import botrestapi.Token;
-import jdk.nashorn.internal.runtime.regexp.JoniRegExp;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -56,7 +55,7 @@ public class TelegramMessages {
 
         JSONArray mainArray = new JSONArray();
 
-        mainArray.put(createArrayOfButton("بیش‌تر..."));
+        mainArray.put(createArrayOfButton("بیش‌تر..." , "travel_more_destination"));
 
         for (int i = 0; i < 5; i++) {
             mainArray.put(createArrayOfButton(destinations.get(i).toString()));
@@ -72,8 +71,12 @@ public class TelegramMessages {
 
 
     private static JSONArray createArrayOfButton(String text){
+        return createArrayOfButton(text,text);
+    }
+
+    private static JSONArray createArrayOfButton(String text,String callback_date){
         JSONArray temp = new JSONArray();
-        temp.put(createButton(text));
+        temp.put(createButton(text,"travel_" + callback_date));
         return temp;
     }
 
@@ -206,8 +209,32 @@ public class TelegramMessages {
                 .getString("text");
     }
 
+    private static JSONArray createYearKeyboard(){
+        JSONArray mainArray = new JSONArray();
+
+        JSONArray innerArray = new JSONArray();
+
+        innerArray.put(createButton("۱۳۹۵","travel_1395"));
+        innerArray.put(createButton("۱۳۹۶","travel_1396"));
+
+        mainArray.put(innerArray);
+
+        return mainArray;
+    }
+
+    public static void sendYearOptionsToUser(String chatId) {
+        JSONObject jsonObject = createRequestJsonObject(chatId,Messages.getYearDateMessage());
+
+        JSONObject replyMarkup = new JSONObject();
+        replyMarkup.put("inline_keyboard",createYearKeyboard());
+
+        jsonObject.put("reply_markup",replyMarkup);
+        httpsPostRequestSendMessage(jsonObject);
+    }
+
     public static void main(String[] args) {
-        sendOriginsListToUser(String.valueOf(85036220));
+//        sendOriginsListToUser(String.valueOf(85036220));
+        sendYearOptionsToUser(String.valueOf(85036220));
 //        sendMessageToUser(String.valueOf(82662030), "سلام");
 //        ArrayList<Destination> destinations = new ArrayList<>();
 //        destinations.add(new Destination("قزوین بی بازگشت"));

@@ -5,8 +5,13 @@ package other;
  */
 public class Travel {
     String origin ;
+    String destination;
 
     public Travel(String origin) {
         this.origin = origin;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
     }
 }

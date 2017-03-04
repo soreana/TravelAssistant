@@ -54,4 +54,9 @@ public class User {
     public void resetState() {
         userState = NOTHING;
     }
+
+    public User setTravelDestination(String travelDestination) {
+        travel.setDestination(travelDestination);
+        return this;
+    }
 }
