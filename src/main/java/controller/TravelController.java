@@ -21,6 +21,9 @@ public class TravelController extends Controller {
         String origin = null, destination = null, year = null, month = null, day = null, duration = null, travelType = null;
 
         switch (state) {
+            case NOTHING:
+                TelegramMessages.sendOriginsListToUser(chatId);
+                break;
             case SENT_ORIGIN:
                 origin = TelegramMessages.getTextPartOfMessage(message).substring(7);
                 currentUser.instantiateNewTravel(origin);
@@ -51,15 +54,9 @@ public class TravelController extends Controller {
                 break;
         }
 
-        System.out.println(state);
         state = currentUser.changeStateForward().getState();
-        System.out.println(state);
 
         switch (state) {
-            case NOTHING:
-                TelegramMessages.sendOriginsListToUser(chatId);
-                UserManager.getUserById(userId).changeStateForward();
-                break;
             case CHOSEN_ORIGIN:
                 TelegramMessages.sendDestinationsListToUser(chatId,
                         TicketAPI.getDestinationForThisOrigin(origin));
