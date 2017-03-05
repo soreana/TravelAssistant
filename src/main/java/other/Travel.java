@@ -1,6 +1,7 @@
 package other;
 
 import helper.MonthMapper;
+import helper.OriginMapper;
 import helper.PersianNumber;
 
 import java.lang.reflect.Field;
@@ -18,7 +19,7 @@ public class Travel {
     private String travelType;
 
     public Travel(String origin) {
-        this.origin = origin;
+        this.origin = OriginMapper.getNameForAbbreviate(origin);
     }
 
     public void setDestination(String destination) {
