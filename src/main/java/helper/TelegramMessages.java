@@ -62,7 +62,7 @@ public class TelegramMessages {
 
         innerArray.put(
 
-                createButton("بیش‌تر...", "travel_more_destination"));
+                createButton("بیش‌تر...", "destination", "more"));
         mainArray.put(innerArray);
 
         for (
@@ -72,8 +72,7 @@ public class TelegramMessages {
         {
 //            mainArray.put(createArrayOfButton(destinations.get(i).toString()));
             innerArray = new JSONArray();
-            innerArray.put(createButton(destinations.get(i).toString()
-                    , "travel_destination_" + destinations.get(i)));
+            innerArray.put(createButton(destinations.get(i).toString(), destinations.get(i).toString(),"destination"));
             mainArray.put(innerArray);
         }
 
@@ -91,10 +90,10 @@ public class TelegramMessages {
         return jsonObject;
     }
 
-    private static JSONObject createButton(String text, String callbackData) {
+    private static JSONObject createButton(String text, String callbackData, String type) {
         return new JSONObject()
                 .put("text", text)
-                .put("callback_data", callbackData);
+                .put("callback_data", "travel_" + type + "_" +callbackData);
     }
 
     private static JSONObject createRequestJsonObject(String chatId, String message) {
@@ -162,8 +161,7 @@ public class TelegramMessages {
             for (int i = 0; i < 3 && iterator.hasNext(); i++) {
                 String originAbbreviate = iterator.next();
                 innerArray.put(createButton(
-                        OriginMapper.getNameForAbbreviate(originAbbreviate),
-                        "travel_" + originAbbreviate));
+                        OriginMapper.getNameForAbbreviate(originAbbreviate), originAbbreviate,"origin"));
             }
 
             mainArray.put(innerArray);
@@ -187,8 +185,8 @@ public class TelegramMessages {
 
         JSONArray innerArray = new JSONArray();
 
-        innerArray.put(createButton("۱۳۹۵", "travel_1395"));
-        innerArray.put(createButton("۱۳۹۶", "travel_1396"));
+        innerArray.put(createButton("۱۳۹۵", "1395","year"));
+        innerArray.put(createButton("۱۳۹۶", "1396","year"));
 
         mainArray.put(innerArray);
 
@@ -207,38 +205,38 @@ public class TelegramMessages {
         JSONArray innerArray = new JSONArray();
 
         if ("1395".equals(year)) {
-            innerArray.put(createButton("اسفند", "travel_esfand"));
+            innerArray.put(createButton("اسفند", "esfand","month"));
             mainArray.put(innerArray);
             return mainArray;
         }
 
-        innerArray.put(createButton("خرداد", "travel_khordad"));
-        innerArray.put(createButton("اردیبهشت", "travel_ordibehesht"));
-        innerArray.put(createButton("فروردین", "travel_farvardin"));
+        innerArray.put(createButton("خرداد", "khordad","month"));
+        innerArray.put(createButton("اردیبهشت", "ordibehesht","month"));
+        innerArray.put(createButton("فروردین", "farvardin","month"));
 
         mainArray.put(innerArray);
 
         innerArray = new JSONArray();
 
-        innerArray.put(createButton("شهریور", "travel_shahrivar"));
-        innerArray.put(createButton("مرداد", "travel_mordad"));
-        innerArray.put(createButton("تیر", "travel_tir"));
+        innerArray.put(createButton("شهریور", "shahrivar","month"));
+        innerArray.put(createButton("مرداد", "mordad","month"));
+        innerArray.put(createButton("تیر", "tir","month"));
 
         mainArray.put(innerArray);
 
         innerArray = new JSONArray();
 
-        innerArray.put(createButton("آذر", "travel_azar"));
-        innerArray.put(createButton("آبان", "travel_aban"));
-        innerArray.put(createButton("مهر", "travel_mehr"));
+        innerArray.put(createButton("آذر", "azar","month"));
+        innerArray.put(createButton("آبان", "aban","month"));
+        innerArray.put(createButton("مهر", "mehr","month"));
 
         mainArray.put(innerArray);
 
         innerArray = new JSONArray();
 
-        innerArray.put(createButton("اسفند", "travel_esfand"));
-        innerArray.put(createButton("بهمن", "travel_bahman"));
-        innerArray.put(createButton("دی", "travel_dey"));
+        innerArray.put(createButton("اسفند", "esfand","month"));
+        innerArray.put(createButton("بهمن", "bahman","month"));
+        innerArray.put(createButton("دی", "dey","month"));
 
         mainArray.put(innerArray);
 
@@ -262,7 +260,7 @@ public class TelegramMessages {
         for (int i = 1; i < 30; ) {
             innerArray = new JSONArray();
             for (int j = 0; j < 5 && i < 30; j++) {
-                innerArray.put(createButton(String.valueOf(i), "travel_" + i));
+                innerArray.put(createButton(String.valueOf(i), "" + i,"day"));
                 i++;
             }
             mainArray.put(innerArray);
@@ -270,12 +268,12 @@ public class TelegramMessages {
 
         if (PersianCalendarHelper.isLeapYear(Long.parseLong(year)) || !"esfand".equals(month))
             ((JSONArray) mainArray.get(mainArray.length() - 1))
-                    .put(createButton(String.valueOf(30), "travel_" + 30));
+                    .put(createButton(String.valueOf(30), "" + 30,"day"));
 
 
         if ("khordad".equals(month) || "ordibehesht".equals(month) || "farvardin".equals(month) ||
                 "tir".equals(month) || "mordad".equals(month) || "shahrivar".equals(month)) {
-            innerArray = new JSONArray().put(createButton(String.valueOf(31), "travel_" + 31));
+            innerArray = new JSONArray().put(createButton(String.valueOf(31), "" + 31,"day"));
             mainArray.put(innerArray);
         }
 
@@ -299,7 +297,7 @@ public class TelegramMessages {
         for (int i = 1; i < 10; ) {
             innerArray = new JSONArray();
             for (int j = 0; j < 3; j++) {
-                innerArray.put(createButton(String.valueOf(i), "travel_" + i));
+                innerArray.put(createButton(String.valueOf(i), "" + i,"duration"));
                 i++;
             }
             mainArray.put(innerArray);
@@ -313,14 +311,14 @@ public class TelegramMessages {
     }
 
     private static JSONArray createTravelOptionsButton(String text, String callbackData) {
-        return new JSONArray().put(createButton(text, callbackData));
+        return new JSONArray().put(createButton(text, callbackData,"vehicle"));
     }
 
     private static JSONArray createTravelKeyboard() {
         return new JSONArray()
-                .put(createTravelOptionsButton("اتوبوس", "travel_bus"))
-                .put(createTravelOptionsButton("هواپیما", "travel_airplane"))
-                .put(createTravelOptionsButton("قطار", "travel_train"));
+                .put(createTravelOptionsButton("اتوبوس", "_bus"))
+                .put(createTravelOptionsButton("هواپیما", "airplane"))
+                .put(createTravelOptionsButton("قطار", "train"));
     }
 
     public static void sendTravelOptions(String chatId) {
