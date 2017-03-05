@@ -18,9 +18,10 @@ import java.util.function.Supplier;
 /**
  * Created by sinakashipazha on 2/28/2017 AD.
  */
+
 public class TelegramMessages {
-    private static String getUrlForMethod(String methodName) {
-        return "https://api.telegram.org/bot" + Token.getToken() + "/" + methodName;
+    private static String getUrlForMethod() {
+        return "https://api.telegram.org/bot" + Token.getToken() + "/" + "sendMessage";
     }
 
     public static void travelOrCompeteKeyboardToChat(String chatId) {
@@ -90,19 +91,15 @@ public class TelegramMessages {
                 .put("callback_data", callbackData);
     }
 
-    private static JSONObject createButton(String text) {
-        return createButton(text, text);
-    }
-
-    public static JSONObject createRequestJsonObject(String chatId, String message) {
+    private static JSONObject createRequestJsonObject(String chatId, String message) {
         return new JSONObject()
                 .put("chat_id", chatId)
                 .put("text", message);
     }
 
-    public static void httpsPostRequestSendMessage(JSONObject jsonObject) {
+    private static void httpsPostRequestSendMessage(JSONObject jsonObject) {
         try {
-            URL url = new URL(getUrlForMethod("sendMessage"));
+            URL url = new URL(getUrlForMethod());
             HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
             con.setDoOutput(true);
             // no idea what is happening in this line :)
@@ -121,9 +118,9 @@ public class TelegramMessages {
 
             StringBuilder sb = new StringBuilder();
             BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"));
-            String line = null;
+            String line ;
             while ((line = br.readLine()) != null) {
-                sb.append(line + "\n");
+                sb.append(line).append("\n");
             }
             br.close();
 
@@ -150,31 +147,6 @@ public class TelegramMessages {
                 .getInt("id"));
     }
 
-    public static void travelModeKeyboardToChat(String chatId) {
-        JSONObject jsonObject = getJsonKeyboardOfTravelMode(chatId);
-        httpsPostRequestSendMessage(jsonObject);
-    }
-
-    private static JSONObject getJsonKeyboardOfTravelMode(String chatId) {
-        JSONObject jsonObject = createRequestJsonObject(chatId, Messages.getTravelModeMessage());
-        JSONArray mainArray = new JSONArray();
-        JSONArray innerArray = new JSONArray();
-
-        innerArray.put(new JSONObject("{\"text\":\"هواپیما\"}"));
-        innerArray.put(new JSONObject("{\"text\":\"قطار\"}"));
-        innerArray.put(new JSONObject("{\"text\":\"اتوبوس\"}"));
-
-        mainArray.put(innerArray);
-
-        JSONObject replyMarkup = new JSONObject();
-        replyMarkup.put("keyboard", mainArray);
-        replyMarkup.put("resize_keyboard", true);
-
-        jsonObject.put("reply_markup", replyMarkup);
-
-        return jsonObject;
-    }
-
     private static JSONArray createOriginKeyboard() {
         Iterator<String> iterator = OriginMapper.getKeySet().iterator();
 
@@ -195,14 +167,7 @@ public class TelegramMessages {
     }
 
     public static void sendOriginsListToUser(String chatId) {
-        JSONObject jsonObject = createRequestJsonObject(chatId, Messages.getOriginMessage());
-
-        JSONObject replyMarkup = new JSONObject();
-
-        replyMarkup.put("inline_keyboard", createOriginKeyboard());
-        jsonObject.put("reply_markup", replyMarkup);
-
-        httpsPostRequestSendMessage(jsonObject);
+        sendKeyBoardMarkupToUser(chatId,TelegramMessages::createOriginKeyboard,Messages::getOriginMessage);
     }
 
     public static String getTextPartOfMessage(String message) {
@@ -225,13 +190,7 @@ public class TelegramMessages {
     }
 
     public static void sendYearOptionsToUser(String chatId) {
-        JSONObject jsonObject = createRequestJsonObject(chatId, Messages.getYearDateMessage());
-
-        JSONObject replyMarkup = new JSONObject();
-        replyMarkup.put("inline_keyboard", createYearKeyboard());
-
-        jsonObject.put("reply_markup", replyMarkup);
-        httpsPostRequestSendMessage(jsonObject);
+        sendKeyBoardMarkupToUser(chatId,TelegramMessages::createYearKeyboard,Messages::getYearDateMessage);
     }
 
     private static JSONArray createMonthKeyboard(String year) {
@@ -344,13 +303,7 @@ public class TelegramMessages {
     }
 
     public static void sendDurationOptions(String chatId) {
-        JSONObject jsonObject = createRequestJsonObject(chatId, Messages.getDurationMessage());
-
-        JSONObject replyMarkup = new JSONObject();
-        replyMarkup.put("inline_keyboard", createDurationKeyboard());
-
-        jsonObject.put("reply_markup", replyMarkup);
-        httpsPostRequestSendMessage(jsonObject);
+        sendKeyBoardMarkupToUser(chatId,TelegramMessages::createDurationKeyboard,Messages::getDurationMessage);
     }
 
     private static JSONArray createTravelOptionsButton(String text , String callbackData ){
@@ -365,21 +318,20 @@ public class TelegramMessages {
     }
 
     public static void sendTravelOptions(String chatId) {
-        JSONObject jsonObject = createRequestJsonObject(chatId, Messages.getTravelModeMessage());
-
-        addKeyBoardMarkupToThisJson(jsonObject,TelegramMessages::createTravelKeyboard);
-
-        httpsPostRequestSendMessage(jsonObject);
+        sendKeyBoardMarkupToUser(chatId,TelegramMessages::createTravelKeyboard,Messages::getTravelModeMessage);
     }
 
-    private static void addKeyBoardMarkupToThisJson(JSONObject jsonObject, Supplier<JSONArray> supplier) {
+    private static void sendKeyBoardMarkupToUser(String chatId, Supplier<JSONArray> supplier,Supplier<String> messageProvider) {
+        JSONObject jsonObject = createRequestJsonObject(chatId, messageProvider.get());
+
         JSONObject replyMarkup = new JSONObject();
         replyMarkup.put("inline_keyboard", supplier.get());
         jsonObject.put("reply_markup", replyMarkup);
+
+        httpsPostRequestSendMessage(jsonObject);
     }
 
     public static void main(String[] args) {
         sendTravelOptions(String.valueOf(85036220));
     }
-
 }
