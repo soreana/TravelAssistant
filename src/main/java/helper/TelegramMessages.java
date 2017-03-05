@@ -53,31 +53,39 @@ public class TelegramMessages {
         httpsPostRequestSendMessage(jsonObject);
     }
 
-    private static JSONObject getJsonKeyboardOfDestination(String chatId, ArrayList<Destination> destinations) {
-        JSONObject jsonObject = createRequestJsonObject(chatId, Messages.getChooseDestinationMessage());
-
+    private static JSONArray createDestinationListKeyboard(ArrayList<Destination> destinations) {
         // TODO handle all destinations
 
         JSONArray mainArray = new JSONArray();
 
         JSONArray innerArray = new JSONArray();
 
-        innerArray.put(createButton("بیش‌تر...", "travel_more_destination"));
+        innerArray.put(
+
+                createButton("بیش‌تر...", "travel_more_destination"));
         mainArray.put(innerArray);
 
-        for (int i = 0; i < 5; i++) {
+        for (
+                int i = 0;
+                i < 5; i++)
+
+        {
 //            mainArray.put(createArrayOfButton(destinations.get(i).toString()));
             innerArray = new JSONArray();
             innerArray.put(createButton(destinations.get(i).toString()
-                    ,"travel_destination_" + destinations.get(i)));
+                    , "travel_destination_" + destinations.get(i)));
             mainArray.put(innerArray);
         }
 
+    }
+
+    private static JSONObject getJsonKeyboardOfDestination(String chatId, ArrayList<Destination> destinations) {
+        JSONObject jsonObject = createRequestJsonObject(chatId, Messages.getChooseDestinationMessage());
+
         JSONObject inlineKeyboard = new JSONObject();
-        inlineKeyboard.put("inline_keyboard", mainArray);
+        inlineKeyboard.put("inline_keyboard", createDestinationListKeyboard(destinations));
 
         jsonObject.put("reply_markup", inlineKeyboard);
-
 
         return jsonObject;
     }
@@ -125,7 +133,7 @@ public class TelegramMessages {
 
             StringBuilder sb = new StringBuilder();
             BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"));
-            String line ;
+            String line;
             while ((line = br.readLine()) != null) {
                 sb.append(line).append("\n");
             }
@@ -174,7 +182,7 @@ public class TelegramMessages {
     }
 
     public static void sendOriginsListToUser(String chatId) {
-        sendKeyBoardMarkupToUser(chatId,TelegramMessages::createOriginKeyboard,Messages::getOriginMessage);
+        sendKeyBoardMarkupToUser(chatId, TelegramMessages::createOriginKeyboard, Messages::getOriginMessage);
     }
 
     public static String getTextPartOfMessage(String message) {
@@ -197,7 +205,7 @@ public class TelegramMessages {
     }
 
     public static void sendYearOptionsToUser(String chatId) {
-        sendKeyBoardMarkupToUser(chatId,TelegramMessages::createYearKeyboard,Messages::getYearDateMessage);
+        sendKeyBoardMarkupToUser(chatId, TelegramMessages::createYearKeyboard, Messages::getYearDateMessage);
     }
 
     private static JSONArray createMonthKeyboard(String year) {
@@ -260,23 +268,23 @@ public class TelegramMessages {
         JSONArray mainArray = new JSONArray();
         JSONArray innerArray;
 
-        for (int i = 1; i < 30;) {
+        for (int i = 1; i < 30; ) {
             innerArray = new JSONArray();
-            for (int j=0; j < 5 && i<30; j++) {
+            for (int j = 0; j < 5 && i < 30; j++) {
                 innerArray.put(createButton(String.valueOf(i), "travel_" + i));
                 i++;
             }
             mainArray.put(innerArray);
         }
 
-        if (PersianCalendarHelper.isLeapYear(Long.parseLong(year)) || ! "esfand".equals(month))
-            ((JSONArray)mainArray.get(mainArray.length() - 1))
-                    .put(createButton(String.valueOf(30),"travel_" + 30));
+        if (PersianCalendarHelper.isLeapYear(Long.parseLong(year)) || !"esfand".equals(month))
+            ((JSONArray) mainArray.get(mainArray.length() - 1))
+                    .put(createButton(String.valueOf(30), "travel_" + 30));
 
 
-        if("khordad".equals(month) || "ordibehesht".equals(month) || "farvardin".equals(month) ||
-                "tir".equals(month) || "mordad".equals(month) || "shahrivar".equals(month)){
-            innerArray = new JSONArray().put(createButton(String.valueOf(31),"travel_" + 31));
+        if ("khordad".equals(month) || "ordibehesht".equals(month) || "farvardin".equals(month) ||
+                "tir".equals(month) || "mordad".equals(month) || "shahrivar".equals(month)) {
+            innerArray = new JSONArray().put(createButton(String.valueOf(31), "travel_" + 31));
             mainArray.put(innerArray);
         }
 
@@ -297,10 +305,10 @@ public class TelegramMessages {
         JSONArray mainArray = new JSONArray();
         JSONArray innerArray;
 
-        for(int i=1 ; i<10 ;){
+        for (int i = 1; i < 10; ) {
             innerArray = new JSONArray();
-            for (int j=0 ; j<3 ; j++){
-                innerArray.put(createButton(String.valueOf(i),"travel_"+i));
+            for (int j = 0; j < 3; j++) {
+                innerArray.put(createButton(String.valueOf(i), "travel_" + i));
                 i++;
             }
             mainArray.put(innerArray);
@@ -310,11 +318,11 @@ public class TelegramMessages {
     }
 
     public static void sendDurationOptions(String chatId) {
-        sendKeyBoardMarkupToUser(chatId,TelegramMessages::createDurationKeyboard,Messages::getDurationMessage);
+        sendKeyBoardMarkupToUser(chatId, TelegramMessages::createDurationKeyboard, Messages::getDurationMessage);
     }
 
-    private static JSONArray createTravelOptionsButton(String text , String callbackData ){
-        return new JSONArray().put(createButton(text,callbackData));
+    private static JSONArray createTravelOptionsButton(String text, String callbackData) {
+        return new JSONArray().put(createButton(text, callbackData));
     }
 
     private static JSONArray createTravelKeyboard() {
@@ -325,10 +333,10 @@ public class TelegramMessages {
     }
 
     public static void sendTravelOptions(String chatId) {
-        sendKeyBoardMarkupToUser(chatId,TelegramMessages::createTravelKeyboard,Messages::getTravelModeMessage);
+        sendKeyBoardMarkupToUser(chatId, TelegramMessages::createTravelKeyboard, Messages::getTravelModeMessage);
     }
 
-    private static void sendKeyBoardMarkupToUser(String chatId, Supplier<JSONArray> supplier,Supplier<String> messageProvider) {
+    private static void sendKeyBoardMarkupToUser(String chatId, Supplier<JSONArray> supplier, Supplier<String> messageProvider) {
         JSONObject jsonObject = createRequestJsonObject(chatId, messageProvider.get());
 
         JSONObject replyMarkup = new JSONObject();
