@@ -2,7 +2,6 @@ package helper;
 
 import botrestapi.Token;
 import com.ghasemkiani.util.PersianCalendarHelper;
-import com.ghasemkiani.util.icu.PersianCalendar;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -14,6 +13,7 @@ import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.function.Supplier;
 
 /**
  * Created by sinakashipazha on 2/28/2017 AD.
@@ -354,9 +354,7 @@ public class TelegramMessages {
     }
 
     private static JSONArray createTravelOptionsButton(String text , String callbackData ){
-        JSONArray innerArray = new JSONArray();
-        innerArray.put(createButton(text,callbackData));
-        return innerArray;
+        return new JSONArray().put(createButton(text,callbackData));
     }
 
     private static JSONArray createTravelKeyboard() {
@@ -369,30 +367,19 @@ public class TelegramMessages {
     public static void sendTravelOptions(String chatId) {
         JSONObject jsonObject = createRequestJsonObject(chatId, Messages.getTravelModeMessage());
 
-        JSONObject replyMarkup = new JSONObject();
-        replyMarkup.put("inline_keyboard", createTravelKeyboard());
+        addKeyBoardMarkupToThisJson(jsonObject,TelegramMessages::createTravelKeyboard);
 
-        jsonObject.put("reply_markup", replyMarkup);
         httpsPostRequestSendMessage(jsonObject);
+    }
+
+    private static void addKeyBoardMarkupToThisJson(JSONObject jsonObject, Supplier<JSONArray> supplier) {
+        JSONObject replyMarkup = new JSONObject();
+        replyMarkup.put("inline_keyboard", supplier.get());
+        jsonObject.put("reply_markup", replyMarkup);
     }
 
     public static void main(String[] args) {
         sendTravelOptions(String.valueOf(85036220));
-//        sendOriginsListToUser(String.valueOf(85036220));
-//        sendYearOptionsToUser(String.valueOf(85036220));
-//        sendDayOptions(String.valueOf(85036220),"khordad","1396");
-//        sendDurationOptions(String.valueOf(82662030));
-//        sendMessageToUser(String.valueOf(82662030), "سلام");
-//        ArrayList<Destination> destinations = new ArrayList<>();
-//        destinations.add(new Destination("قزوین بی بازگشت"));
-//        destinations.add(new Destination("قزوین با بازگشت"));
-//        destinations.add(new Destination("اصفهان"));
-//        destinations.add(new Destination("مشهد"));
-//        destinations.add(new Destination("تهران"));
-//        destinations.add(new Destination("اهواز"));
-//        destinationListKeyboardToChat(String.valueOf(82662030),destinations);
-//
-//        travelOrCompeteKeyboardToChat(String.valueOf(82662030));
     }
 
 }
