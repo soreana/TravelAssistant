@@ -77,6 +77,7 @@ public class TelegramMessages {
             mainArray.put(innerArray);
         }
 
+        return mainArray;
     }
 
     private static JSONObject getJsonKeyboardOfDestination(String chatId, ArrayList<Destination> destinations) {
@@ -88,16 +89,6 @@ public class TelegramMessages {
         jsonObject.put("reply_markup", inlineKeyboard);
 
         return jsonObject;
-    }
-
-    private static JSONArray createArrayOfButton(String text) {
-        return createArrayOfButton(text, text);
-    }
-
-    private static JSONArray createArrayOfButton(String text, String callback_date) {
-        JSONArray temp = new JSONArray();
-        temp.put(createButton(text, "travel_" + callback_date));
-        return temp;
     }
 
     private static JSONObject createButton(String text, String callbackData) {
