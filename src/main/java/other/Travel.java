@@ -90,6 +90,7 @@ public class Travel {
                         result += MonthMapper.getPersianMounth((String) current.get(this));
                     else
                         result += current.get(this);
+                    result += "\n";
                 }
             }
         } catch (IllegalAccessException e) {
