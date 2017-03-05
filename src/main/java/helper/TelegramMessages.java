@@ -60,10 +60,12 @@ public class TelegramMessages {
 
         JSONArray mainArray = new JSONArray();
 
-        mainArray.put(createArrayOfButton("بیش‌تر...", "travel_more_destination"));
+        mainArray.put(createButton("بیش‌تر...", "travel_more_destination"));
 
         for (int i = 0; i < 5; i++) {
-            mainArray.put(createArrayOfButton(destinations.get(i).toString()));
+//            mainArray.put(createArrayOfButton(destinations.get(i).toString()));
+            mainArray.put(createButton(destinations.get(i).toString()
+                    ,"travel_destination_" + destinations.get(i)));
         }
 
         JSONObject inlineKeyboard = new JSONObject();
@@ -73,7 +75,6 @@ public class TelegramMessages {
 
         return jsonObject;
     }
-
 
     private static JSONArray createArrayOfButton(String text) {
         return createArrayOfButton(text, text);
