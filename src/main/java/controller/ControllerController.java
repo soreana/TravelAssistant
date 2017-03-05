@@ -19,7 +19,7 @@ public class ControllerController {
                 break;
             case "سفر":
             case "/travel":
-                result = new TravelController();
+                result = new TravelController(message);
                 break;
             case "مسابقه":
             case "/compete":

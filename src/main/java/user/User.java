@@ -53,6 +53,7 @@ public class User {
 
     public void resetState() {
         userState = NOTHING;
+        travel = null;
     }
 
     public User setTravelDestination(String travelDestination) {

@@ -10,9 +10,18 @@ import user.UserState;
  * Created by sinakashipazha on 2/28/2017 AD.
  */
 public class TravelController extends Controller {
+    public TravelController(){}
+
+    public TravelController(String message) {
+        String userId = TelegramMessages.getUserId(message);
+        User currentUser = UserManager.getUserById(userId);
+        currentUser.resetState();
+    }
+
 
     @Override
     public void incomingMessage(String message) {
+        // todo extract message state if is not equal to user state restore to that state
         String userId = TelegramMessages.getUserId(message);
         User currentUser = UserManager.getUserById(userId);
         UserState state = currentUser.getState();
