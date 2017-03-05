@@ -52,9 +52,9 @@ public class Travel {
     private String mapFieldToPersianName(String fieldName) {
         switch (fieldName) {
             case "origin":
-                return "مقصد";
-            case "destination":
                 return "مبدا";
+            case "destination":
+                return "مقصد";
             case "year":
                 return "سال";
             case "month":
