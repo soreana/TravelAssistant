@@ -25,16 +25,18 @@ public class TravelController extends Controller {
     public void incomingMessage(String message) {
         String userId = TelegramMessages.getUserId(message);
         User currentUser = UserManager.getUserById(userId);
-        UserState state = currentUser.getState();
         String chatId = TelegramMessages.getChatId(message);
         String messageText = TelegramMessages.getTextPartOfMessage(message);
         String messageType = TelegramMessages.getTypeOfMessage(messageText);
         UserState messageState = UserState.getStateOfThisType(messageType);
+
         try {
             currentUser.restoreUserStateToThisState(messageState);
         } catch (CannotRestoreException e) {
             TelegramMessages.sendMessageToUser(chatId, Messages.getUserRestorationFailure());
         }
+
+        UserState state = currentUser.getState();
         String messageBody = TelegramMessages.getMessageBody(messageText);
 
         String origin = null, destination = null, year = null, month = null, day = null, duration = null, travelType = null;

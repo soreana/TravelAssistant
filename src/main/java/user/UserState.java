@@ -59,10 +59,10 @@ public enum UserState {
 
     public static UserState getStateOfThisType(String messageType) {
         switch (messageType){
-            case "destination":
-                return SENT_DESTINATION;
             case "origin":
                 return SENT_ORIGIN;
+            case "destination":
+                return SENT_DESTINATION;
             case "year":
                 return SENT_YEAR_OPTIONS;
             case "month":
