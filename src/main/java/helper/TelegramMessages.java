@@ -29,7 +29,10 @@ public class TelegramMessages {
     }
 
     public static String getMessageBody(String message) {
-        return message.substring(message.lastIndexOf("_") + 1);
+        if (message.contains("_"))
+            return message.substring(message.lastIndexOf("_") + 1);
+        else
+            return message;
     }
 
     private static String getUrlForMethod() {
