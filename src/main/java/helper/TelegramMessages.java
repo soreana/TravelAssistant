@@ -20,6 +20,14 @@ import java.util.function.Supplier;
  */
 
 public class TelegramMessages {
+    private static String getTypeOfMessage(String message){
+        String [] types = message.split("_");
+        if (types.length > 0)
+        return types[1];
+        else
+            return types[0];
+    }
+
     private static String getUrlForMethod() {
         return "https://api.telegram.org/bot" + Token.getToken() + "/" + "sendMessage";
     }
@@ -316,7 +324,7 @@ public class TelegramMessages {
 
     private static JSONArray createTravelKeyboard() {
         return new JSONArray()
-                .put(createTravelOptionsButton("اتوبوس", "_bus"))
+                .put(createTravelOptionsButton("اتوبوس", "bus"))
                 .put(createTravelOptionsButton("هواپیما", "airplane"))
                 .put(createTravelOptionsButton("قطار", "train"));
     }
@@ -336,6 +344,6 @@ public class TelegramMessages {
     }
 
     public static void main(String[] args) {
-        sendTravelOptions(String.valueOf(85036220));
+//        sendTravelOptions(String.valueOf(85036220));
     }
 }
