@@ -20,12 +20,16 @@ import java.util.function.Supplier;
  */
 
 public class TelegramMessages {
-    private static String getTypeOfMessage(String message){
+    public static String getTypeOfMessage(String message){
         String [] types = message.split("_");
         if (types.length > 0)
         return types[1];
         else
             return types[0];
+    }
+
+    public static String getMessageBody(String message){
+        return message.substring(message.lastIndexOf("_") + 1);
     }
 
     private static String getUrlForMethod() {

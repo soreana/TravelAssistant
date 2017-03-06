@@ -26,6 +26,9 @@ public class TravelController extends Controller {
         User currentUser = UserManager.getUserById(userId);
         UserState state = currentUser.getState();
         String chatId = TelegramMessages.getChatId(message);
+        String messageText = TelegramMessages.getTextPartOfMessage(message);
+        String messageType = TelegramMessages.getTypeOfMessage(messageText);
+        String messageBody = TelegramMessages.getMessageBody(messageText);
 
         String origin = null, destination = null, year = null, month = null, day = null, duration = null, travelType = null;
 
@@ -36,32 +39,32 @@ public class TravelController extends Controller {
                 TelegramMessages.sendOriginsListToUser(chatId);
                 break;
             case SENT_ORIGIN:
-                origin = TelegramMessages.getTextPartOfMessage(message).substring(7);
+                origin = messageBody;
                 currentUser.instantiateNewTravel(origin);
                 System.out.println(origin);
                 break;
             case SENT_DESTINATION:
-                destination = TelegramMessages.getTextPartOfMessage(message).substring(7);
+                destination = messageBody;
                 currentUser.setTravelDestination(destination);
                 break;
             case SENT_YEAR_OPTIONS:
-                year = TelegramMessages.getTextPartOfMessage(message).substring(7);
+                year = messageBody;
                 currentUser.setTravelYear(year);
                 break;
             case SENT_MONTH_OPTIONS:
-                month = TelegramMessages.getTextPartOfMessage(message).substring(7);
+                month = messageBody;
                 currentUser.setTravelMonth(month);
                 break;
             case SENT_DAY_OPTIONS:
-                day = TelegramMessages.getTextPartOfMessage(message).substring(7);
+                day = messageBody;
                 currentUser.setTravelDay(day);
                 break;
             case SENT_DURATION_OPTIONS:
-                duration = TelegramMessages.getTextPartOfMessage(message).substring(7);
+                duration = messageBody;
                 currentUser.setDurationDay(duration);
                 break;
             case SENT_TRAVEL_TYPE_OPTIONS:
-                travelType = TelegramMessages.getTextPartOfMessage(message).substring(7);
+                travelType = messageBody;
                 currentUser.setTravelType(travelType);
                 break;
         }
