@@ -93,4 +93,7 @@ public class User {
     public Travel getTravel() {
         return travel;
     }
+
+    public void restoreUserStateToThisState(UserState messageState) throws CannotRestoreException{
+    }
 }

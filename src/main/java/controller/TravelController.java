@@ -1,7 +1,9 @@
 package controller;
 
+import helper.Messages;
 import helper.TelegramMessages;
 import helper.TicketAPI;
+import user.CannotRestoreException;
 import user.User;
 import user.UserManager;
 import user.UserState;
@@ -21,13 +23,18 @@ public class TravelController extends Controller {
 
     @Override
     public void incomingMessage(String message) {
-        // todo extract message state if is not equal to user state restore to that state
         String userId = TelegramMessages.getUserId(message);
         User currentUser = UserManager.getUserById(userId);
         UserState state = currentUser.getState();
         String chatId = TelegramMessages.getChatId(message);
         String messageText = TelegramMessages.getTextPartOfMessage(message);
         String messageType = TelegramMessages.getTypeOfMessage(messageText);
+        UserState messageState = UserState.getStateOfThisType(messageType);
+        try {
+            currentUser.restoreUserStateToThisState(messageState);
+        } catch (CannotRestoreException e) {
+            TelegramMessages.sendMessageToUser(chatId, Messages.getUserRestorationFailure());
+        }
         String messageBody = TelegramMessages.getMessageBody(messageText);
 
         String origin = null, destination = null, year = null, month = null, day = null, duration = null, travelType = null;
@@ -92,7 +99,7 @@ public class TravelController extends Controller {
             case CHOSEN_DURATION:
                 TelegramMessages.sendTravelOptions(chatId);
                 break;
-            case CHOSEN_TRAVEL_TYPE:
+            case CHOSEN_TRAVEL_VEHICLE:
                 // todo get travel from Reza api
                 break;
         }

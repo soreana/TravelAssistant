@@ -18,7 +18,7 @@ public enum UserState {
     SENT_DURATION_OPTIONS,
     CHOSEN_DURATION,
     SENT_TRAVEL_TYPE_OPTIONS,
-    CHOSEN_TRAVEL_TYPE;
+    CHOSEN_TRAVEL_VEHICLE;
 
     public UserState forward() {
         switch (this) {
@@ -49,9 +49,30 @@ public enum UserState {
             case CHOSEN_DURATION:
                 return SENT_TRAVEL_TYPE_OPTIONS;
             case SENT_TRAVEL_TYPE_OPTIONS:
-                return CHOSEN_TRAVEL_TYPE;
-            case CHOSEN_TRAVEL_TYPE:
+                return CHOSEN_TRAVEL_VEHICLE;
+            case CHOSEN_TRAVEL_VEHICLE:
                 return NOTHING;
+            default:
+                return NOTHING;
+        }
+    }
+
+    public static UserState getStateOfThisType(String messageType) {
+        switch (messageType){
+            case "destination":
+                return CHOSEN_DESTINATION;
+            case "origin":
+                return CHOSEN_ORIGIN;
+            case "year":
+                return CHOSEN_YEAR;
+            case "month":
+                return CHOSEN_MONTH;
+            case "day":
+                return CHOSEN_MONTH;
+            case "duration":
+                return CHOSEN_DURATION;
+            case "vehicle":
+                return CHOSEN_TRAVEL_VEHICLE;
             default:
                 return NOTHING;
         }

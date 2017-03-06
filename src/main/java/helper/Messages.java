@@ -15,6 +15,7 @@ public class Messages {
     private static final String dayDateMessage = "لطفا روز سفر خود را انتخاب کنید.";
     private static final String resultListMessage = "نتایج جست و جو:";
     private static final String paymentMessage = "لینک پرداخت";
+    private static final String userRestorationFailureMessage = "کلید فشرده شده مورد قبول نیست.";
 
 
     public static String getWelcomeMessage(){
@@ -59,5 +60,9 @@ public class Messages {
 
     public static String getPaymentMessage() {
         return paymentMessage;
+    }
+
+    public static String getUserRestorationFailure() {
+        return userRestorationFailureMessage;
     }
 }
