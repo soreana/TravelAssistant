@@ -1,5 +1,6 @@
 package user;
 
+import helper.TelegramMessages;
 import org.json.JSONObject;
 import other.Travel;
 
@@ -95,5 +96,9 @@ public class User {
     }
 
     public void restoreUserStateToThisState(UserState messageState) throws CannotRestoreException{
+        if ( messageState != userState){
+            // todo remove invalid fields
+            userState = messageState;
+        }
     }
 }

@@ -70,7 +70,7 @@ public class TravelController extends Controller {
                 duration = messageBody;
                 currentUser.setDurationDay(duration);
                 break;
-            case SENT_TRAVEL_TYPE_OPTIONS:
+            case SENT_TRAVEL_VEHICLE_OPTIONS:
                 travelType = messageBody;
                 currentUser.setTravelType(travelType);
                 break;
