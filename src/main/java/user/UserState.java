@@ -68,7 +68,7 @@ public enum UserState {
             case "month":
                 return SENT_MONTH_OPTIONS;
             case "day":
-                return SENT_MONTH_OPTIONS;
+                return SENT_DAY_OPTIONS;
             case "duration":
                 return SENT_DURATION_OPTIONS;
             case "vehicle":
